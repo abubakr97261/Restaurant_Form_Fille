@@ -1,0 +1,1 @@
+pyinstaller --onefile --icon=ICON_PIC.png Restaurant_Form_Filler.py

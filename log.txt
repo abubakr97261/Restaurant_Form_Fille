@@ -1,0 +1,109 @@
+2023-01-02 10:25:18,733 credential file opened...
+2023-01-02 10:25:18,735 All credentials loaded...
+2023-01-02 10:26:00,000 Running job Job(interval=1, unit=days, do=form_377033_LOGA, args=(), kwargs={})
+2023-01-02 10:26:00,000 credential file opened...
+2023-01-02 10:26:00,002 All credentials loaded...
+2023-01-02 10:26:00,002 form_377033_LOGA opened
+2023-01-02 10:26:00,005 Starting new HTTPS connection (1): www.zenput.com:443
+2023-01-02 10:26:00,750 https://www.zenput.com:443 "POST /get_sso_company_info/ HTTP/1.1" 200 274
+2023-01-02 10:26:00,766 driver not found in PATH, trying Selenium Manager
+2023-01-02 10:26:00,767 Executing selenium manager with: ('C:\\Users\\Admin\\PycharmProjects\\pythonProject2\\venv\\lib\\site-packages\\selenium\\webdriver\\common\\windows\\selenium-manager.exe', '--browser', 'chrome')
+2023-01-02 10:26:00,784 Using driver at: C:\Users\Admin\.cache\selenium\chromedriver\win32\108.0.5359.71\chromedriver.exe
+2023-01-02 10:26:00,787 Started executable: `chromedriver` in a child process with pid: 11224
+2023-01-02 10:26:01,319 POST http://localhost:50981/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "pageLoadStrategy": "normal", "goog:chromeOptions": {"extensions": [], "args": []}}}}
+2023-01-02 10:26:01,319 Starting new HTTP connection (1): localhost:50981
+2023-01-02 10:26:01,899 http://localhost:50981 "POST /session HTTP/1.1" 200 791
+2023-01-02 10:26:01,900 Remote response: status=200 | data={"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"chrome","browserVersion":"108.0.5359.125","chrome":{"chromedriverVersion":"108.0.5359.71 (1e0e3868ee06e91ad636a874420e3ca3ae3756ac-refs/branch-heads/5359@{#1016})","userDataDir":"C:\\Users\\Admin\\AppData\\Local\\Temp\\scoped_dir11224_575587788"},"goog:chromeOptions":{"debuggerAddress":"localhost:50984"},"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"windows","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:virtualAuthenticators":true},"sessionId":"bf3e954f57ccf96a3e323004b6e82cd3"}} | headers=HTTPHeaderDict({'Content-Length': '791', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2023-01-02 10:26:01,900 Finished Request
+2023-01-02 10:26:01,900 POST http://localhost:50981/session/bf3e954f57ccf96a3e323004b6e82cd3/url {"url": "https://zenput.auth0.com/authorize?client_id=vmFR5ePxkzh5UAJkijHZiKcZixJcERX6&connection=rbi-plk-prod&login_hint=RGM12278%40rest.popeyes.com&sp_type=auth0&state=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlJHTTEyMjc4QHJlc3QucG9wZXllcy5jb20iLCJ0aW1lc3RhbXAiOjE2NzI2MzcxNjAuMH0.SCAQewzkeA6v0NMs4fLQq11rW5G-DR-oInpqc46KweA&scope=offline_access%20openid%20profile%20email&redirect_uri=https%3A%2F%2Fwww.zenput.com%2Fauth0_callback%2F&response_type=code&auth0Client=eyJuYW1lIjoiYXV0aDAuanMiLCJ2ZXJzaW9uIjoiOS4xMy4yIn0%3D"}
+2023-01-02 10:26:05,041 http://localhost:50981 "POST /session/bf3e954f57ccf96a3e323004b6e82cd3/url HTTP/1.1" 200 14
+2023-01-02 10:26:05,041 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2023-01-02 10:26:05,041 Finished Request
+2023-01-02 10:26:05,041 POST http://localhost:50981/session/bf3e954f57ccf96a3e323004b6e82cd3/element {"using": "css selector", "value": "[id=\"okta-signin-username\"]"}
+2023-01-02 10:26:05,085 http://localhost:50981 "POST /session/bf3e954f57ccf96a3e323004b6e82cd3/element HTTP/1.1" 200 88
+2023-01-02 10:26:05,085 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"26d90b1b-1b8a-4e04-80db-bb875a36433b"}} | headers=HTTPHeaderDict({'Content-Length': '88', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2023-01-02 10:26:05,085 Finished Request
+2023-01-02 10:26:05,085 POST http://localhost:50981/session/bf3e954f57ccf96a3e323004b6e82cd3/element/26d90b1b-1b8a-4e04-80db-bb875a36433b/value {"text": "RGM04566", "value": ["R", "G", "M", "0", "4", "5", "6", "6"], "id": "26d90b1b-1b8a-4e04-80db-bb875a36433b"}
+2023-01-02 10:26:05,136 http://localhost:50981 "POST /session/bf3e954f57ccf96a3e323004b6e82cd3/element/26d90b1b-1b8a-4e04-80db-bb875a36433b/value HTTP/1.1" 200 14
+2023-01-02 10:26:05,136 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2023-01-02 10:26:05,136 Finished Request
+2023-01-02 10:26:05,136 POST http://localhost:50981/session/bf3e954f57ccf96a3e323004b6e82cd3/element {"using": "css selector", "value": "[id=\"okta-signin-password\"]"}
+2023-01-02 10:26:05,144 http://localhost:50981 "POST /session/bf3e954f57ccf96a3e323004b6e82cd3/element HTTP/1.1" 200 88
+2023-01-02 10:26:05,144 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"a900da79-bf0b-4040-b169-179f4aaf2649"}} | headers=HTTPHeaderDict({'Content-Length': '88', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2023-01-02 10:26:05,144 Finished Request
+2023-01-02 10:26:05,144 POST http://localhost:50981/session/bf3e954f57ccf96a3e323004b6e82cd3/element/a900da79-bf0b-4040-b169-179f4aaf2649/value {"text": "Spicy.2022!", "value": ["S", "p", "i", "c", "y", ".", "2", "0", "2", "2", "!"], "id": "a900da79-bf0b-4040-b169-179f4aaf2649"}
+2023-01-02 10:26:05,195 http://localhost:50981 "POST /session/bf3e954f57ccf96a3e323004b6e82cd3/element/a900da79-bf0b-4040-b169-179f4aaf2649/value HTTP/1.1" 200 14
+2023-01-02 10:26:05,195 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2023-01-02 10:26:05,195 Finished Request
+2023-01-02 10:26:05,196 POST http://localhost:50981/session/bf3e954f57ccf96a3e323004b6e82cd3/element {"using": "css selector", "value": "[id=\"okta-signin-submit\"]"}
+2023-01-02 10:26:05,203 http://localhost:50981 "POST /session/bf3e954f57ccf96a3e323004b6e82cd3/element HTTP/1.1" 200 88
+2023-01-02 10:26:05,204 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"0678dead-d25a-4e22-847d-5658daf94a67"}} | headers=HTTPHeaderDict({'Content-Length': '88', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2023-01-02 10:26:05,204 Finished Request
+2023-01-02 10:26:05,204 POST http://localhost:50981/session/bf3e954f57ccf96a3e323004b6e82cd3/element/0678dead-d25a-4e22-847d-5658daf94a67/click {"id": "0678dead-d25a-4e22-847d-5658daf94a67"}
+2023-01-02 10:26:05,248 http://localhost:50981 "POST /session/bf3e954f57ccf96a3e323004b6e82cd3/element/0678dead-d25a-4e22-847d-5658daf94a67/click HTTP/1.1" 200 14
+2023-01-02 10:26:05,249 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2023-01-02 10:26:05,249 Finished Request
+2023-01-02 10:26:55,262 POST http://localhost:50981/session/bf3e954f57ccf96a3e323004b6e82cd3/element {"using": "xpath", "value": "//a[@id='oiw_btn']"}
+2023-01-02 10:26:55,280 http://localhost:50981 "POST /session/bf3e954f57ccf96a3e323004b6e82cd3/element HTTP/1.1" 200 88
+2023-01-02 10:26:55,280 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"bbab6627-a0cf-44e3-a6a8-55d8f7f8487e"}} | headers=HTTPHeaderDict({'Content-Length': '88', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2023-01-02 10:26:55,280 Finished Request
+2023-01-02 10:26:55,280 POST http://localhost:50981/session/bf3e954f57ccf96a3e323004b6e82cd3/element/bbab6627-a0cf-44e3-a6a8-55d8f7f8487e/click {"id": "bbab6627-a0cf-44e3-a6a8-55d8f7f8487e"}
+2023-01-02 10:26:55,372 http://localhost:50981 "POST /session/bf3e954f57ccf96a3e323004b6e82cd3/element/bbab6627-a0cf-44e3-a6a8-55d8f7f8487e/click HTTP/1.1" 200 14
+2023-01-02 10:26:55,372 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2023-01-02 10:26:55,373 Finished Request
+2023-01-02 10:27:15,387 POST http://localhost:50981/session/bf3e954f57ccf96a3e323004b6e82cd3/element {"using": "xpath", "value": "//li//a[@class='navlink taskitem_container']//div[normalize-space()='HACCP Log A (Opening)']"}
+2023-01-02 10:27:15,415 http://localhost:50981 "POST /session/bf3e954f57ccf96a3e323004b6e82cd3/element HTTP/1.1" 200 88
+2023-01-02 10:27:15,415 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"681441a4-5422-458e-b1ab-57ea38c8e219"}} | headers=HTTPHeaderDict({'Content-Length': '88', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2023-01-02 10:27:15,415 Finished Request
+2023-01-02 10:27:15,415 POST http://localhost:50981/session/bf3e954f57ccf96a3e323004b6e82cd3/element/681441a4-5422-458e-b1ab-57ea38c8e219/click {"id": "681441a4-5422-458e-b1ab-57ea38c8e219"}
+2023-01-02 10:27:15,481 http://localhost:50981 "POST /session/bf3e954f57ccf96a3e323004b6e82cd3/element/681441a4-5422-458e-b1ab-57ea38c8e219/click HTTP/1.1" 200 14
+2023-01-02 10:27:15,481 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2023-01-02 10:27:15,481 Finished Request
+2023-01-02 10:27:35,482 POST http://localhost:50981/session/bf3e954f57ccf96a3e323004b6e82cd3/element {"using": "xpath", "value": "//div[@id='submit_form']"}
+2023-01-02 10:27:35,498 http://localhost:50981 "POST /session/bf3e954f57ccf96a3e323004b6e82cd3/element HTTP/1.1" 200 88
+2023-01-02 10:27:35,498 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"29a3e67b-02ed-4acf-82ee-f31ade2f9b6f"}} | headers=HTTPHeaderDict({'Content-Length': '88', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2023-01-02 10:27:35,498 Finished Request
+2023-01-02 10:27:35,498 POST http://localhost:50981/session/bf3e954f57ccf96a3e323004b6e82cd3/element/29a3e67b-02ed-4acf-82ee-f31ade2f9b6f/click {"id": "29a3e67b-02ed-4acf-82ee-f31ade2f9b6f"}
+2023-01-02 10:27:35,545 http://localhost:50981 "POST /session/bf3e954f57ccf96a3e323004b6e82cd3/element/29a3e67b-02ed-4acf-82ee-f31ade2f9b6f/click HTTP/1.1" 200 14
+2023-01-02 10:27:35,545 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2023-01-02 10:27:35,545 Finished Request
+2023-05-01 11:02:42,206 credential file opened...
+2023-05-01 11:02:42,211 All credentials loaded...
+2023-05-01 11:04:31,855 credential file opened...
+2023-05-01 11:04:31,859 All credentials loaded...
+2023-05-01 11:05:00,000 Running job Job(interval=1, unit=days, do=form_377033_LOGA, args=(), kwargs={})
+2023-05-01 11:05:00,000 credential file opened...
+2023-05-01 11:05:00,001 All credentials loaded...
+2023-05-01 11:05:00,001 form_377033_LOGA opened
+2023-05-01 11:05:00,004 Starting new HTTPS connection (1): www.zenput.com:443
+2023-05-01 11:05:00,788 https://www.zenput.com:443 "POST /get_sso_company_info/ HTTP/1.1" 200 284
+2023-05-01 11:05:15,512 credential file opened...
+2023-05-01 11:05:15,514 All credentials loaded...
+2023-05-01 11:06:00,000 Running job Job(interval=1, unit=days, do=form_377033_LOGA, args=(), kwargs={})
+2023-05-01 11:06:00,000 credential file opened...
+2023-05-01 11:06:00,001 All credentials loaded...
+2023-05-01 11:06:00,001 form_377033_LOGA opened
+2023-05-01 11:06:00,007 Starting new HTTPS connection (1): www.zenput.com:443
+2023-05-01 11:06:00,621 https://www.zenput.com:443 "POST /get_sso_company_info/ HTTP/1.1" 200 287
+2023-05-01 11:08:18,060 credential file opened...
+2023-05-01 11:08:18,064 All credentials loaded...
+2023-05-01 11:09:00,000 Running job Job(interval=1, unit=days, do=form_377033_LOGA, args=(), kwargs={})
+2023-05-01 11:09:00,000 credential file opened...
+2023-05-01 11:09:00,001 All credentials loaded...
+2023-05-01 11:09:00,001 form_377033_LOGA opened
+2023-05-01 11:09:00,004 Starting new HTTPS connection (1): www.zenput.com:443
+2023-05-01 11:09:00,578 https://www.zenput.com:443 "POST /get_sso_company_info/ HTTP/1.1" 200 286
+2023-05-01 11:09:01,536 POST http://127.0.0.1:60379/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": []}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": []}}}
+2023-05-01 11:09:01,536 Starting new HTTP connection (1): 127.0.0.1:60379
+2023-05-01 11:09:02,189 http://127.0.0.1:60379 "POST /session HTTP/1.1" 500 1118
+2023-05-01 11:09:02,190 Finished Request
+2023-05-01 11:41:38,827 credential file opened...
+2023-05-01 11:41:38,830 All credentials loaded...
+2023-05-01 11:41:53,183 credential file opened...
+2023-05-01 11:41:53,185 All credentials loaded...
+2023-05-01 11:42:00,000 Running job Job(interval=1, unit=days, do=form_377033_LOGA, args=(), kwargs={})
+2023-05-01 11:42:00,000 credential file opened...
+2023-05-01 11:42:00,001 All credentials loaded...
+2023-05-01 11:42:00,001 form_377033_LOGA opened
+2023-05-01 11:42:00,004 Starting new HTTPS connection (1): www.zenput.com:443
+2023-05-01 11:42:00,405 https://www.zenput.com:443 "POST /get_sso_company_info/ HTTP/1.1" 200 287
