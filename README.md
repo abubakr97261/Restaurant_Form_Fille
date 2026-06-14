@@ -2,301 +2,496 @@ Restaurant Form Filler Automation
 <p align="center">
   <img src="ICON_PIC.png" alt="Restaurant Form Filler Logo" width="160" />
 </p>
-A Python-based browser automation project that uses Selenium to open scheduled restaurant operations forms, authenticate through the web login flow, fill configured checklist fields, sign the form, submit it, and write local execution logs.
-> **Important:** This project should only be used with authorised accounts, authorised environments, and accurate operational data. Do not use this script to falsify HACCP, food safety, travel path, or compliance records. If the repository is public, never commit real credentials, logs, or generated executables.
+
+
+A Python-based browser automation tool for filling scheduled restaurant operational forms through the Zenput web platform. The project uses Selenium WebDriver to log in through the restaurant SSO flow, open assigned forms, populate required fields, complete checklist items, add signatures, submit the forms, and record activity in a local log file.
+
+> **Important:** This project should only be used by authorised users for legitimate restaurant operations. Do not use this tool to submit false, random, or unverified compliance data. HACCP and operational logs are business-critical records and may be audited.
+
 ---
-Table of Contents
-Project Overview
-Main Features
-Technology Stack
-Project Structure
-How the Application Works
-Requirements
-Installation
-Configuration
-Running the Script
-Building a Windows EXE
-GitHub Upload Checklist
-Recommended .gitignore
-Troubleshooting
-Security Notes
-Known Limitations
-Future Improvements
-License
+
+## Table of Contents
+
+* [Project Overview](#project-overview)
+* [Main Features](#main-features)
+* [Technology Stack](#technology-stack)
+* [Project Structure](#project-structure)
+* [How the Automation Works](#how-the-automation-works)
+* [Forms Automated](#forms-automated)
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Running the Project](#running-the-project)
+* [Building the EXE File](#building-the-exe-file)
+* [Logging](#logging)
+* [Security Notes](#security-notes)
+* [GitHub Upload Guide](#github-upload-guide)
+* [Recommended `.gitignore`](#recommended-gitignore)
+* [Known Limitations](#known-limitations)
+* [Future Improvements](#future-improvements)
+* [Disclaimer](#disclaimer)
+
 ---
-Project Overview
-Restaurant Form Filler Automation is a desktop automation script for repetitive restaurant web-form workflows. It reads login details, restaurant information, manager name, and form schedule times from a local YAML configuration file. It then runs daily scheduled jobs that open the browser, log in, navigate to the required form, complete the selected fields, apply a signature, submit the form, and close the browser session.
-The current script targets several restaurant operation forms, including:
-HACCP Log A — Opening
-HACCP Log B
-HACCP Log C
-HACCP Log D — Closing
-Daily Travel Path — Brand Standard AM pre-rush
-Daily Travel Path — Brand Standard PM pre-rush
-The application is intended as a browser automation example and should be adapted carefully before real-world use.
+
+## Project Overview
+
+Restaurant Form Filler is a desktop automation project designed to reduce repetitive manual work involved in completing daily restaurant forms.
+
+The script opens the Zenput web platform, performs the login process, selects specific restaurant forms, enters configured information, fills operational fields, completes checklist buttons, signs the form, and submits it.
+
+The automation is built mainly for restaurant management workflows where repeated daily forms need to be completed at specific times.
+
 ---
-Main Features
-Selenium-based browser automation using Google Chrome.
-YAML-based local configuration for credentials and schedule times.
-Daily scheduling through the Python `schedule` package.
-Automated navigation to multiple restaurant operation forms.
-Local logging to `log.txt` for debugging and execution tracking.
-Optional conversion into a standalone Windows executable using PyInstaller.
-Uses Selenium Manager when a ChromeDriver binary is not manually supplied.
+
+## Main Features
+
+* Automates login to the Zenput web platform.
+* Uses restaurant credentials stored in a local YAML configuration file.
+* Opens specific restaurant forms by name.
+* Fills HACCP-related temperature fields.
+* Completes yes/no checklist items.
+* Adds manager name where required.
+* Creates a simple signature using Selenium action chains.
+* Submits forms automatically.
+* Supports scheduled execution using the `schedule` package.
+* Writes detailed runtime logs to `log.txt`.
+* Can be packaged into a Windows `.exe` file using PyInstaller.
+
 ---
-Technology Stack
-Tool / Library	Purpose
-Python	Main programming language
-Selenium	Browser automation
-Requests	HTTP request to retrieve SSO/company information
-PyYAML	Reading the local YAML configuration file
-schedule	Running jobs at configured daily times
-PyInstaller	Optional packaging into a Windows `.exe` file
-Google Chrome	Browser used by Selenium
+
+## Technology Stack
+
+The project uses the following technologies:
+
+| Technology       | Purpose                                                         |
+| ---------------- | --------------------------------------------------------------- |
+| Python           | Main programming language                                       |
+| Selenium         | Browser automation                                              |
+| Chrome WebDriver | Controls Google Chrome                                          |
+| Requests         | Sends HTTP request to retrieve SSO company information          |
+| PyYAML           | Reads login and scheduling configuration from `credentials.yml` |
+| Schedule         | Runs form-filling jobs at defined times                         |
+| Logging          | Tracks execution details in `log.txt`                           |
+| PyInstaller      | Converts the Python script into a Windows executable            |
+
 ---
-Project Structure
-Recommended clean repository structure:
+
+## Project Structure
+
+Recommended project structure:
+
 ```text
 Restaurant-Form-Filler/
 │
-├── Restaurant_Form_Filler.py      # Main automation script
-├── requirements.txt               # Python dependencies
-├── requirements.bat               # Optional Windows install helper
-├── py to exe.txt                  # PyInstaller command reference
-├── ICON_PIC.png                   # Application icon/logo
-├── credentials.example.yml        # Safe example config file; no real credentials
-├── README.md                      # Project documentation
-└── .gitignore                     # Files that should not be uploaded
+├── Restaurant_Form_Filler.py
+├── requirements.txt
+├── requirements.bat
+├── README.md
+├── ICON_PIC.png
+├── py to exe.txt
+│
+├── credentials.example.yml
+└── .gitignore
 ```
-Files that should not be committed to GitHub:
+
+Local-only files that should not be uploaded to GitHub:
+
 ```text
 credentials.yml
 log.txt
-*.exe
 chromedriver.exe
-old app/
+Restaurant_Form_Filler.exe
+__pycache__/
 build/
 dist/
-__pycache__/
 *.spec
 ```
+
 ---
-How the Application Works
-The script starts from `main()`.
-`main()` calls `task()`.
-`task()` loads values from `credentials.yml`.
-The script creates scheduled daily jobs using the configured form times.
-When a job time is reached, the related form function runs.
-The function requests company/SSO information from the web endpoint.
-Selenium opens Chrome and navigates to the generated login URL.
-The script enters the configured username and password.
-After login, it opens the selected form.
-It fills configured text fields, numeric fields, yes/no buttons, and signature fields.
-It submits the form and closes the browser.
-The `while True` loop keeps the scheduler alive and repeatedly checks pending jobs.
+
+## How the Automation Works
+
+The automation follows this general workflow:
+
+1. Opens the local `credentials.yml` file.
+2. Loads user login details, restaurant details, manager name, and scheduled form times.
+3. Sends a request to Zenput to get SSO company information.
+4. Builds the SSO authentication URL.
+5. Opens Google Chrome using Selenium WebDriver.
+6. Enters the username and password into the Okta login screen.
+7. Waits for the dashboard to load.
+8. Opens the required form from the task list.
+9. Clicks the form submit/start button.
+10. Fills required input fields.
+11. Selects required checklist buttons.
+12. Draws a signature using Selenium `ActionChains`.
+13. Submits the form.
+14. Closes the browser.
+15. Writes execution status to `log.txt`.
+
 ---
-Requirements
-Before running the project, make sure you have:
-Windows 10 or Windows 11.
-Python 3.9+ installed.
-Google Chrome installed.
-Internet access.
-An authorised account for the target web system.
-Permission to automate the selected forms.
+
+## Forms Automated
+
+The current script includes automation for the following forms:
+
+### HACCP Forms
+
+* HACCP Log A Opening
+* HACCP Log B
+* HACCP Log C
+* HACCP Log D Closing
+
+### Daily Travel Path Forms
+
+* Daily Travel Path - Brand Standard AM Pre-Rush
+* Daily Travel Path - Brand Standard PM Pre-Rush
+
+Each form has its own function inside the main script. The script uses Selenium XPath selectors to locate fields, buttons, text areas, signature fields, and submit buttons.
+
 ---
-Installation
-1. Clone the repository
-```bash
-git clone https://github.com/YOUR-USERNAME/Restaurant-Form-Filler.git
-cd Restaurant-Form-Filler
-```
-2. Create a virtual environment
-```bash
-python -m venv .venv
-```
-3. Activate the virtual environment
-For Windows PowerShell:
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-For Windows Command Prompt:
-```cmd
-.venv\Scripts\activate
-```
-4. Install dependencies
-```bash
-pip install -r requirements.txt
-```
-The dependency file currently includes:
+
+## Requirements
+
+Before running the project, install the following:
+
+* Windows operating system
+* Python 3.8 or later
+* Google Chrome browser
+* Internet connection
+* Valid authorised Zenput/restaurant account
+* Access to the required forms in Zenput
+* Python dependencies listed in `requirements.txt`
+
+The project dependencies are:
+
 ```text
 selenium==4.6.0
 requests==2.27.1
 schedule
 pyyaml==6.0
 ```
+
 ---
-Configuration
-Create a local file named `credentials.yml` in the project root.
-Use this structure, but replace all placeholder values with your own authorised test or production values:
-```yaml
-Zenput credentials:
-  userName: "YOUR_USERNAME"
-  Password: "YOUR_PASSWORD"
-  email: "YOUR_LOGIN_EMAIL"
-  restaurant_name: "YOUR_RESTAURANT_NUMBER"
-  HACCP LOG A form filling time: "09:15"
-  HACCP LOG B form filling time: "13:15"
-  HACCP LOG C form filling time: "17:15"
-  HACCP LOG D form filling time: "20:15"
-  Daily Travel Path - Brand Standard (AM pre-rush) time: "11:15"
-  Daily Travel Path - Brand Standard (PM pre-rush) time: "16:15"
-  Manager name: "YOUR_MANAGER_NAME"
+
+## Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/Restaurant-Form-Filler.git
+cd Restaurant-Form-Filler
 ```
-Important configuration notes
-Use 24-hour time format: `HH:MM`.
-Keep the YAML structure consistent with the script.
-Do not commit `credentials.yml` to GitHub.
-Create `credentials.example.yml` for GitHub instead, using only placeholder values.
-The current script reads YAML values by position after converting the YAML object to a string. This is fragile. A future improvement should read fields by key name instead.
+
+### 2. Create a Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+### 3. Activate the Virtual Environment
+
+For Windows Command Prompt:
+
+```bash
+venv\Scripts\activate
+```
+
+For PowerShell:
+
+```bash
+venv\Scripts\Activate.ps1
+```
+
+### 4. Install Required Packages
+
+```bash
+pip install -r requirements.txt
+```
+
 ---
-Running the Script
-Start the automation with:
+
+## Configuration
+
+The project requires a local `credentials.yml` file.
+
+Do not upload the real `credentials.yml` file to GitHub.
+
+Instead, create a safe example file named:
+
+```text
+credentials.example.yml
+```
+
+Example structure:
+
+```yml
+credentials:
+  user: "YOUR_USERNAME"
+  password: "YOUR_PASSWORD"
+  login_hint: "YOUR_EMAIL_OR_LOGIN_HINT"
+  restaurant_name: "YOUR_RESTAURANT_NUMBER"
+
+schedule:
+  haccp_a_time: "10:00"
+  haccp_b_time: "12:00"
+  haccp_c_time: "15:00"
+  haccp_d_time: "22:00"
+  daily_travel_path_am_time: "09:00"
+  daily_travel_path_pm_time: "17:00"
+
+manager:
+  name: "MANAGER_NAME"
+```
+
+Then create your real local file:
+
+```text
+credentials.yml
+```
+
+Use your actual values only in the local `credentials.yml` file.
+
+---
+
+## Running the Project
+
+After installing dependencies and creating `credentials.yml`, run:
+
 ```bash
 python Restaurant_Form_Filler.py
 ```
-The script will keep running because it uses a scheduler loop. Keep the terminal window open while the automation is active.
-To stop it, press:
-```text
-CTRL + C
-```
+
+The script will start the scheduler and run the configured form-filling tasks at the times defined in the credentials/configuration file.
+
 ---
-Building a Windows EXE
+
+## Building the EXE File
+
+This project can be converted into a Windows executable using PyInstaller.
+
 Install PyInstaller:
+
 ```bash
 pip install pyinstaller
 ```
+
 Build the executable:
+
 ```bash
 pyinstaller --onefile --icon=ICON_PIC.png Restaurant_Form_Filler.py
 ```
-After the build finishes, the executable will be created inside the `dist/` folder.
-Do not upload generated `.exe` files directly to the main GitHub repository. If you want to share compiled builds, use the Releases section of GitHub instead.
----
-GitHub Upload Checklist
-Before uploading the project to GitHub, do this:
-Delete or exclude real `credentials.yml`.
-Delete or exclude `log.txt`.
-Delete or exclude `Restaurant_Form_Filler.exe`.
-Delete or exclude `chromedriver.exe` unless there is a strong reason to include it.
-Add a safe `credentials.example.yml` file.
-Add a `.gitignore` file.
-Replace any hardcoded private values with placeholders.
-Check the full Git history before making the repository public.
-If real credentials were ever committed, rotate/reset those credentials immediately.
----
-Recommended .gitignore
-Create a `.gitignore` file in the project root:
-```gitignore
-# Secrets and local config
-credentials.yml
-*.env
-.env
 
-# Logs
+After the build completes, the executable file will be available inside the `dist` folder:
+
+```text
+dist/Restaurant_Form_Filler.exe
+```
+
+You can then run the executable directly on a Windows machine.
+
+---
+
+## Logging
+
+The script creates a local log file:
+
+```text
 log.txt
-*.log
+```
 
-# Python cache
-__pycache__/
-*.py[cod]
-*$py.class
+The log file stores runtime activity such as:
 
-# Virtual environments
-.venv/
-venv/
-env/
+* Credential file opened
+* Credentials loaded
+* Form job started
+* Browser driver status
+* Web requests
+* Form opened
+* Form submitted
+* Errors or exceptions
 
-# Build outputs
+Example log messages:
+
+```text
+credential file opened...
+All credentials loaded...
+form_377033_LOGA opened
+form_377033_LOGA submitted
+```
+
+The log file is useful for debugging, but it must not be uploaded to GitHub because it may contain sensitive runtime details.
+
+---
+
+## Security Notes
+
+This project handles sensitive information.
+
+Do not upload the following files to GitHub:
+
+```text
+credentials.yml
+log.txt
+Restaurant_Form_Filler.exe
+chromedriver.exe
+```
+
+The `credentials.yml` file may contain usernames, passwords, restaurant details, and login hints.
+
+The `log.txt` file may expose login flow details, form names, URLs, browser session information, and other sensitive operational information.
+
+If real credentials were ever committed to GitHub, you should immediately:
+
+1. Delete them from the repository.
+2. Remove them from Git history.
+3. Change the exposed password.
+4. Regenerate any affected credentials.
+5. Review account activity.
+
+---
+
+## GitHub Upload Guide
+
+Before uploading to GitHub, your repository should include:
+
+```text
+Restaurant_Form_Filler.py
+requirements.txt
+requirements.bat
+README.md
+ICON_PIC.png
+py to exe.txt
+credentials.example.yml
+.gitignore
+```
+
+Your repository should not include:
+
+```text
+credentials.yml
+log.txt
+Restaurant_Form_Filler.exe
+chromedriver.exe
+old app/
 build/
 dist/
 *.spec
-*.exe
+```
 
-# Local drivers and old files
+Recommended upload steps:
+
+```bash
+git init
+git add Restaurant_Form_Filler.py requirements.txt requirements.bat README.md ICON_PIC.png "py to exe.txt" credentials.example.yml .gitignore
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/your-username/Restaurant-Form-Filler.git
+git push -u origin main
+```
+
+---
+
+## Recommended `.gitignore`
+
+Create a `.gitignore` file and add:
+
+```gitignore
+# Sensitive files
+credentials.yml
+log.txt
+
+# Executables and drivers
+*.exe
 chromedriver.exe
-old app/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# PyInstaller output
+build/
+dist/
+*.spec
 
 # IDE files
-.vscode/
 .idea/
+.vscode/
 
 # OS files
 .DS_Store
 Thumbs.db
+
+# Logs
+*.log
 ```
+
 ---
-Troubleshooting
-1. `credentials.yml` not found
-Make sure `credentials.yml` exists in the same folder as `Restaurant_Form_Filler.py`.
-2. Chrome opens but login fails
-Check:
-username
-password
-email/login hint
-account permissions
-whether multi-factor authentication is required
-whether the login page structure has changed
-3. Selenium cannot find an element
-This usually means the website layout, form name, field ID, button ID, or XPath changed. Update the relevant selector in `Restaurant_Form_Filler.py`.
-4. ChromeDriver or browser version problem
-Selenium 4.6.0 can use Selenium Manager to locate or download a compatible driver. If driver issues continue, update Google Chrome, update Selenium, or manually install a matching ChromeDriver.
-5. Script runs but forms do not submit
-Check:
-internet connection
-login session status
-form availability
-form names
-field IDs
-page load timing
-whether the site has added CAPTCHA, MFA, or anti-automation checks
+
+## Known Limitations
+
+This project works, but it has several important limitations.
+
+### 1. Hardcoded XPaths
+
+The script depends heavily on hardcoded XPath selectors. If Zenput changes its page structure, form layout, field IDs, or button labels, the automation may break.
+
+### 2. Fixed Sleep Times
+
+The script uses `time.sleep()` for waiting. This works, but it is not ideal. If the internet connection is slow or the page takes longer than expected, the script may fail.
+
+A better approach would be to use Selenium explicit waits.
+
+### 3. Randomised Form Values
+
+Some fields are filled using random values within a range. This is risky for compliance records. HACCP forms should only contain accurate and verified readings.
+
+Do not use random values for real compliance submissions unless the values are approved, verified, and legally acceptable for your workplace.
+
+### 4. Browser Must Be Available
+
+The script requires Google Chrome to be installed and working correctly.
+
+### 5. Login Flow May Change
+
+The script depends on the current Zenput/Auth0/Okta login flow. If the authentication process changes, the script may need updates.
+
+### 6. No Graphical User Interface
+
+The current version runs as a script or executable. It does not include a user-friendly GUI for editing schedules or credentials.
+
 ---
-Security Notes
-Never upload real usernames, passwords, restaurant IDs, private login URLs, tokens, or logs to GitHub.
-The local log file may contain sensitive browser session details or login URLs.
-If credentials have already been uploaded to a public repository, assume they are compromised and rotate them immediately.
-For production-grade use, replace `credentials.yml` with environment variables, a secrets manager, or encrypted local storage.
-Avoid storing passwords in plain text.
-Review the target website's terms of service and internal compliance rules before using automation.
+
+## Future Improvements
+
+Possible future improvements include:
+
+* Add a graphical user interface.
+* Replace `time.sleep()` with Selenium explicit waits.
+* Store credentials more securely using environment variables.
+* Add better exception handling.
+* Add email or desktop notifications after successful form submission.
+* Add screenshot capture on failure.
+* Add configuration validation before running.
+* Add support for multiple restaurants.
+* Add form status reporting.
+* Add unit tests for configuration loading.
+* Add structured logging with log rotation.
+* Replace hardcoded XPath selectors with more stable selectors where possible.
+
 ---
-Known Limitations
-The script uses hardcoded XPaths and field IDs.
-The script uses `time.sleep()` instead of Selenium explicit waits.
-YAML parsing is fragile because values are extracted by string position.
-There is limited exception handling around browser actions.
-The script uses generated and hardcoded numeric entries in several form fields. These must be replaced with verified, accurate values before any legitimate operational use.
-The scheduler runs indefinitely until manually stopped.
-Any website UI change can break the automation.
----
-Future Improvements
-Recommended improvements before professional or production use:
-Use `WebDriverWait` instead of fixed `time.sleep()` calls.
-Read YAML values by key name instead of positional string splitting.
-Move credentials to environment variables or a secure vault.
-Add better exception handling and retry logic.
-Add screenshots on failure for easier debugging.
-Add command-line arguments for running one form manually.
-Add a dry-run mode for testing without submitting forms.
-Separate form data from code using JSON/YAML form templates.
-Add unit tests for configuration loading and scheduling logic.
-Replace generated numeric values with validated data inputs.
-Add clear audit logging without exposing secrets.
----
-License
-No license has been selected yet. Add a license before making the repository public.
-Common choices:
-MIT License for open-source use.
-Private/internal license for company-only automation.
-No license if you do not want others to reuse the code.
----
-Disclaimer
-This project is provided for educational and authorised automation purposes only. The maintainer is responsible for ensuring that the script is used lawfully, ethically, and in line with workplace, food safety, and platform rules.
+
+## Disclaimer
+
+This project is intended for educational and authorised operational automation purposes only.
+
+The developer is not responsible for incorrect submissions, false compliance records, account misuse, platform policy violations, or business consequences caused by improper use of this tool.
+
+Users are responsible for making sure that all submitted form data is accurate, authorised, and compliant with their organisation’s policies.
